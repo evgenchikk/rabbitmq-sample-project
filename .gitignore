@@ -1,0 +1,8 @@
+.env
+.venv/
+.vscode/
+uploads/
+test_img/
+
+__pycache__
+.DS_Store
