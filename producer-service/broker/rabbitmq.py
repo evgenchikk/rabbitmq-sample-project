@@ -1,3 +1,5 @@
+from retry import retry
+
 import pika
 from pika import spec
 
@@ -26,8 +28,10 @@ class RabbitMQ:
                                 exchange='images_exchange',
                                 routing_key='image_process')
 
-
+    @retry(pika.exceptions.AMQPConnectionError, delay=1, backoff=2)
     async def publish(self, message: str) -> None:
+        if self.connection == None or self.connection.is_closed:
+            self.connect()
         self.channel.basic_publish(exchange='images_exchange',
                                    routing_key='image_process',
                                    body=message,
@@ -38,8 +42,9 @@ rabbitmq_instance = RabbitMQ()
 
 
 def get_rabbitmq_instance() -> RabbitMQ:
-    while True:
-        if rabbitmq_instance.connection == None or rabbitmq_instance.connection.is_closed:
-            rabbitmq_instance.connect()
-        else:
-            return rabbitmq_instance
+    return rabbitmq_instance
+    # while True:
+    #     if rabbitmq_instance.connection == None or rabbitmq_instance.connection.is_closed:
+    #         rabbitmq_instance.connect()
+    #     else:
+    #         return rabbitmq_instance
