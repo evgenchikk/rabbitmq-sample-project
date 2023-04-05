@@ -3,7 +3,7 @@
 ## Launch
 - git clone https://github.com/evgenchikk/rabbitmq-sample-project
 
-- run "docker compose up -d"
+- run "docker compose up -d"<br>
 App will start on port 3000
 
 ## HTTP methods:
