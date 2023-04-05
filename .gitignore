@@ -4,5 +4,8 @@
 uploads/
 test_img/
 
+.postgres
+.rabbitmq
+
 __pycache__
 .DS_Store

@@ -31,6 +31,10 @@ async def get_image(id: str,
 async def post_image(file: UploadFile = None,
                      image_service: ImageService = Depends()):
 
+    if (file == None):
+        return HTTPException(status_code=400,
+                             detail=f'method requires file upload{str(e)}')
+
     content_type: str = file.content_type
     file_binary: bytes = await file.read()
 
