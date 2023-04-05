@@ -1,7 +1,6 @@
-from retry import retry
-
 import pika
 from pika import spec
+from retry import retry
 
 from config.config import Config, config
 

@@ -12,7 +12,8 @@ class ImageRepository():
         self.db_session = db_session
 
     async def get_image_by_id(self, id: int) -> ImageModel:
-        pass
+        image: ImageModel = self.db_session.get(ImageModel, id)
+        return image
 
     async def save_image(self, filename: str) -> ImageModel:
         image: ImageModel = ImageModel(

@@ -12,7 +12,10 @@ class FileRepository():
         self.local_images_dir = config.LOCAL_IMAGES_DIR
 
     async def get_file_by_name(self, filename: str) -> bytes:
-        pass
+        file_binary: bytes = None
+        with open(f'{self.local_images_dir}/{filename}', 'rb') as file:
+            file_binary = file.read()
+        return file_binary
 
     async def save_file(self, content_type: str, file_binary: bytes) -> str:
         try:

@@ -19,10 +19,9 @@ class ImageService():
         self.image_repository = image_repository
 
 
-    async def get_image_by_id(self,
-                              id: int) -> tuple[BytesIO, str]:
+    async def get_image_by_id(self, id: int) -> tuple:
         try:
-            image: ImageModel = await self.repository.get_image_by_id(id=id)
+            image: ImageModel = await self.image_repository.get_image_by_id(id=id)
         except Exception as e:
             raise Exception(e)
 
@@ -31,7 +30,10 @@ class ImageService():
         except Exception as e:
             raise Exception(e)
 
-        return tuple(BytesIO(file_binary), image.filename.split('.')[-1])
+        result = BytesIO(file_binary)
+        result.seek(0)
+
+        return result, str(image.filename).split('.')[-1]
 
 
     async def upload_image(self,
